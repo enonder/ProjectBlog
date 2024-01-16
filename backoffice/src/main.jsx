@@ -9,12 +9,17 @@ import './index.css'
 import Settings from './Pages/Settings.jsx';
 import Create from './Pages/Create.jsx';
 import Blogs from './Pages/Blogs.jsx';
+import Home from './Pages/Home.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
     children: [
+      {
+        path: "Home",
+        element: <Home/>
+      },
       {path: "Blogs",
        element: <Blogs/>
       },

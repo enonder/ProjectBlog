@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import {
+  EditOutlined,
+  HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  UnorderedListOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button, theme, Flex } from 'antd';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from 'antd';
 
+const { Title } = Typography;
 const { Header, Sider, Content } = Layout;
 
 const App = () => {
@@ -31,18 +34,23 @@ const App = () => {
           onClick={( {key} ) => navigate("/" + key)}
           items={[
             {
+              key: 'home',
+              icon: <HomeOutlined />,
+              label: 'Home'
+            },
+            {
               key: 'blogs',
-              icon: <UserOutlined />,
+              icon: <UnorderedListOutlined />,
               label: 'Blogs'
             },
             {
               key: 'create',
-              icon: <UserOutlined />,
+              icon: <EditOutlined />,
               label: 'Create',
             },
             {
               key: 'settings',
-              icon: <VideoCameraOutlined />,
+              icon: <SettingOutlined />,
               label: 'Settings',
             },
           ]}
@@ -55,16 +63,26 @@ const App = () => {
             background: colorBgContainer,
           }}
         >
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
-          />
+          <Flex justify='space-between' align='center'>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{
+                fontSize: '16px',
+                width: 64,
+                height: 64,
+              }}
+            />
+            <Button type="text"
+              icon={<EditOutlined />}
+              onClick={() => navigate("/create")}
+              style={{
+                fontSize: '16px',
+              }}>
+              New Blog
+            </Button>
+          </Flex>
         </Header>
         <Content
           style={{
