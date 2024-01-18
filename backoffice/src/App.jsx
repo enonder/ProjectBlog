@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  EditOutlined,
+  FileAddOutlined,
   HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -10,9 +10,7 @@ import {
 import { Layout, Menu, Button, theme, Flex } from 'antd';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Typography } from 'antd';
 
-const { Title } = Typography;
 const { Header, Sider, Content } = Layout;
 
 const App = () => {
@@ -43,11 +41,7 @@ const App = () => {
               icon: <UnorderedListOutlined />,
               label: 'Blogs'
             },
-            {
-              key: 'create',
-              icon: <EditOutlined />,
-              label: 'Create',
-            },
+
             {
               key: 'settings',
               icon: <SettingOutlined />,
@@ -75,7 +69,7 @@ const App = () => {
               }}
             />
             <Button type="text"
-              icon={<EditOutlined />}
+              icon={<FileAddOutlined />}
               onClick={() => navigate("/create")}
               style={{
                 fontSize: '16px',

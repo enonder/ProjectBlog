@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Button, Flex, Input } from 'antd';
+import * as dayjs from 'dayjs'
+
 
 const Create = () => {
   const [blog, setBlog] = useState('');
   const [title, setTitle] = useState('');
 
   const handleSave = () => {
+    var createDate = dayjs().format('M/D/YYYY h:mm A');
     const prevBlogs = JSON.parse(localStorage.getItem('blogs'));
     const newBlogs = {
       ...prevBlogs,
-      [title]: blog
+      [title]: {blog, createDate}
     }
-
+    // localStorage.setItem("date", new Date().toString()); 
     localStorage.setItem('blogs', JSON.stringify(newBlogs));
-  
     setTitle('');
     setBlog('');
   };
