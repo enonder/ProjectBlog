@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   FileAddOutlined,
   HomeOutlined,
@@ -6,40 +6,40 @@ import {
   MenuUnfoldOutlined,
   UnorderedListOutlined,
   SettingOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Flex } from 'antd';
-import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+} from '@ant-design/icons'
+import { Layout, Menu, Button, theme, Flex } from 'antd'
+import { Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout
 
 const App = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  } = theme.useToken()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
-    <Layout style={{minHeight: '100vh'}}>
+    <Layout style={{ minHeight: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
-          onClick={( {key} ) => navigate("/" + key)}
+          onClick={({ key }) => navigate('/' + key)}
           items={[
             {
               key: 'home',
               icon: <HomeOutlined />,
-              label: 'Home'
+              label: 'Home',
             },
             {
               key: 'blogs',
               icon: <UnorderedListOutlined />,
-              label: 'Blogs'
+              label: 'Blogs',
             },
 
             {
@@ -57,7 +57,7 @@ const App = () => {
             background: colorBgContainer,
           }}
         >
-          <Flex justify='space-between' align='center'>
+          <Flex justify="space-between" align="center">
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -68,12 +68,14 @@ const App = () => {
                 height: 64,
               }}
             />
-            <Button type="text"
+            <Button
+              type="text"
               icon={<FileAddOutlined />}
-              onClick={() => navigate("/create")}
+              onClick={() => navigate('/create')}
               style={{
                 fontSize: '16px',
-              }}>
+              }}
+            >
               New Blog
             </Button>
           </Flex>
@@ -87,11 +89,11 @@ const App = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <Outlet/>
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
-  );
-};
+  )
+}
 
-export default App;
+export default App
