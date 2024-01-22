@@ -12,6 +12,7 @@ import {
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import BlogPreview from '../Components/BlogPreview'
+import BlogEdit from '../Components/BlogEdit'
 
 const { Title } = Typography
 
@@ -19,11 +20,17 @@ const Blogs = () => {
   const [listDisplay, setListDisplay] = useState(false)
   const [openPreview, setOpenPreview] = useState(false)
   const [selectedBlog, setSelectedBlog] = useState()
+  const [editBlog, setEditBlog] = useState(false)
 
   const dataSource = Object.entries(
     JSON.parse(localStorage.getItem('blogs'))
   ).map(([title, data], index) => {
-    return { key: index, title, createDate: data.createDate }
+    return {
+      key: index,
+      title,
+      createDate: data.createDate,
+      updateDate: data.updateDate,
+    }
   })
 
   const columns = [
@@ -33,9 +40,14 @@ const Blogs = () => {
       key: 'title',
     },
     {
-      title: 'Date',
+      title: 'Create Date',
       dataIndex: 'createDate',
-      key: 'date',
+      key: 'createDate',
+    },
+    {
+      title: 'Update Date',
+      dataIndex: 'updateDate',
+      key: 'updateDate',
     },
     {
       title: 'Creator',
@@ -48,9 +60,12 @@ const Blogs = () => {
     setListDisplay(!listDisplay)
   }
 
-  const handleDeleteBlog = () => {}
-
-  const handleEditBlog = () => {}
+  const handleDeleteBlog = (title) => {
+    const storedBlogs = JSON.parse(localStorage.getItem('blogs'))
+    delete storedBlogs[title]
+    localStorage.setItem('blogs', JSON.stringify(storedBlogs))
+    setOpenPreview(false)
+  }
 
   return (
     <div>
@@ -78,7 +93,8 @@ const Blogs = () => {
                       hoverable="true"
                       onClick={() => {
                         setOpenPreview(true)
-                        setSelectedBlog({ title, data })
+                        setSelectedBlog({ title, ...data })
+                        setEditBlog(false)
                       }}
                     >
                       <div
@@ -93,30 +109,43 @@ const Blogs = () => {
               )}
           </Flex>
         ) : (
-          <Table dataSource={dataSource} columns={columns} />
+          <Table
+            dataSource={dataSource}
+            columns={columns}
+            onRow={(record, rowIndex) => {
+              return { onClick: () => setOpenPreview(true) }
+            }}
+          />
         )}
 
         <Modal
           centered
           open={openPreview}
-          // onOk={() => setOpenPreview(false)}
           onCancel={() => setOpenPreview(false)}
           width={1000}
           footer={
             <>
-              <Button key="delete" onClick={handleDeleteBlog}>
+              <Button
+                key="delete"
+                onClick={() => handleDeleteBlog(selectedBlog.title)}
+              >
                 Delete
               </Button>
-              <Button key="edit" onClick={handleEditBlog}>
+              <Button key="edit" onClick={() => setEditBlog(true)}>
                 Edit
               </Button>
             </>
           }
         >
-          <BlogPreview
-            setSelectedBlog={setSelectedBlog}
-            selectedBlog={selectedBlog}
-          />
+          {editBlog ? (
+            <BlogEdit
+              selectedBlog={selectedBlog}
+              handleDeleteBlog={handleDeleteBlog}
+              setOpenPreview={setOpenPreview}
+            />
+          ) : (
+            <BlogPreview selectedBlog={selectedBlog} />
+          )}
         </Modal>
       </div>
     </div>

@@ -10,7 +10,7 @@ const BlogPreview = ({ selectedBlog }) => {
       <div
         style={{ height: 100 }}
         dangerouslySetInnerHTML={{
-          __html: selectedBlog.data.blog,
+          __html: selectedBlog.blog,
         }}
       />
     </div>

@@ -4,20 +4,22 @@ import 'react-quill/dist/quill.snow.css'
 import { Button, Flex, Input } from 'antd'
 import * as dayjs from 'dayjs'
 
-const Create = () => {
+const BlogEdit = ({ selectedBlog, setOpenPreview }) => {
   const [blog, setBlog] = useState('')
   const [title, setTitle] = useState('')
 
   const handleSave = () => {
-    var createDate = dayjs().format('M/D/YYYY h:mm A')
+    var updateDate = dayjs().format('M/D/YYYY h:mm A')
     const prevBlogs = JSON.parse(localStorage.getItem('blogs'))
     const newBlogs = {
       ...prevBlogs,
-      [title]: { blog, createDate },
+      [selectedBlog.title]: { ...selectedBlog, blog, updateDate },
     }
     localStorage.setItem('blogs', JSON.stringify(newBlogs))
+    setOpenPreview(false)
     setTitle('')
     setBlog('')
+    console.log(JSON.parse(localStorage.getItem('blogs')))
   }
 
   return (
@@ -25,13 +27,14 @@ const Create = () => {
       <Flex gap="middle" vertical style={{ height: '90%' }}>
         <Input
           placeholder="Title"
-          value={title}
+          defaultValue={selectedBlog.title}
           onChange={(e) => setTitle(e.target.value)}
+          disabled
         />
         <ReactQuill
           style={{ height: '100%', paddingBottom: 50 }}
           theme="snow"
-          value={blog}
+          defaultValue={selectedBlog.blog}
           onChange={setBlog}
         />
       </Flex>
@@ -42,4 +45,4 @@ const Create = () => {
   )
 }
 
-export default Create
+export default BlogEdit
