@@ -7,6 +7,8 @@ import Settings from './Pages/Settings.jsx'
 import Create from './Pages/Create.jsx'
 import Blogs from './Pages/Blogs.jsx'
 import Home from './Pages/Home.jsx'
+import SignIn from './Components/Auth/SignIn.jsx'
+import SignUp from './Components/Auth/SignUp.jsx'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,16 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
     ],
+  },
+  {
+    path: '/login',
+    element: <SignIn />,
+    children: [],
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
+    children: [],
   },
 ])
 
