@@ -5,12 +5,15 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UnorderedListOutlined,
+  UserOutlined,
   SettingOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, Button, theme, Flex } from 'antd'
 import { Outlet } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 const { Header, Sider, Content } = Layout
+
+import AuthDetails from './Components/Auth/AuthDetails'
 
 const App = () => {
   const [collapsed, setCollapsed] = useState(false)
@@ -30,6 +33,11 @@ const App = () => {
           defaultSelectedKeys={['1']}
           onClick={({ key }) => navigate('/' + key)}
           items={[
+            {
+              key: 'profile',
+              icon: <UserOutlined />,
+              label: 'Profile',
+            },
             {
               key: 'home',
               icon: <HomeOutlined />,

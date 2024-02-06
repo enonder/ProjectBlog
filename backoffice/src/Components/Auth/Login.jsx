@@ -1,17 +1,12 @@
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from './firebase.js'
+import { auth } from '../../firebase.js'
 import React from 'react'
-import { useState } from 'react'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Checkbox, Divider, Form, Input } from 'antd'
+import { Button, Checkbox, Form, Input } from 'antd'
 
-const SignIn = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  const signIn = (e) => {
-    e.preventDefault()
-    signInWithEmailAndPassword(auth, email, password)
+const Login = () => {
+  const login = (e) => {
+    signInWithEmailAndPassword(auth, e.username, e.password)
       .then((userCredential) => {
         console.log(userCredential)
       })
@@ -20,14 +15,11 @@ const SignIn = () => {
       })
   }
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
-  }
-
   return (
     <div
       style={{
         width: '400px',
+        padding: '50px',
         alignItems: 'center',
         justifyContent: 'center',
       }}
@@ -38,7 +30,7 @@ const SignIn = () => {
         initialValues={{
           remember: true,
         }}
-        onFinish={signIn}
+        onFinish={login}
       >
         <Form.Item
           name="username"
@@ -52,8 +44,6 @@ const SignIn = () => {
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
           />
         </Form.Item>
         <Form.Item
@@ -69,8 +59,6 @@ const SignIn = () => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
         <Form.Item>
@@ -96,29 +84,11 @@ const SignIn = () => {
             Log in
           </Button>
           <div style={{ marginBottom: '10px' }} />
-          Or <a href="">register now!</a>
+          Or <a href="/signup">register now!</a>
         </Form.Item>
       </Form>
     </div>
-    // <>
-    //   <form onSubmit={signIn}>
-    //     <h1>Sign In</h1>
-    //     <input
-    //       type="email"
-    //       placeholder="email"
-    //       value={email}
-    //       onChange={(e) => setEmail(e.target.value)}
-    //     />
-    //     <input
-    //       type="password"
-    //       placeholder="password"
-    //       value={password}
-    //       onChange={(e) => setPassword(e.target.value)}
-    //     />
-    //     <button type="submit">Sign In</button>
-    //   </form>
-    // </>
   )
 }
 
-export default SignIn
+export default Login
